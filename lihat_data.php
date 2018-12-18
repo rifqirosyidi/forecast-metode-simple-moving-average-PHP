@@ -20,7 +20,45 @@ if (isset($_POST['prediksi'])){
 
 		if(count($records) >= 6 ) {
 
-			echo "DATA LEBIH DARI 6";
+			$enam = $db->query("SELECT perolehan FROM simple_moving ORDER BY id DESC LIMIT 6");
+			$tiga = $db->query("SELECT perolehan FROM simple_moving ORDER BY id DESC LIMIT 3");
+
+			while($enamFetch = $enam->fetch_object()) {
+				$arrEnam[] = $enamFetch;
+			}
+			foreach($arrEnam as $e) {
+				$b[] = $e->perolehan;
+			}
+
+			$e1 = $b[0];
+			$e2 = $b[1];
+			$e3 = $b[2];
+			$e4 = $b[3];
+			$e5 = $b[4];
+			$e6 = $b[5];
+
+			while($tigaFetch = $tiga->fetch_object()) {
+				$arrTiga[] = $tigaFetch;
+			}
+			foreach($arrTiga as $t) {
+				$a[] = $t->perolehan;
+			}
+
+			$t1 = $a[0];
+			$t2 = $a[1];
+			$t3 = $a[2];
+
+
+			$averageEnam = round(($e1 + $e2 + $e3 + $e4 + $e5 + $e6) / 6);
+			$averageTiga = round(($t1 + $t2 + $t3) / 3);
+
+			$insertForecast = $db->query("INSERT INTO simple_moving (fore_3, fore_6) VALUES ('$averageTiga', '$averageEnam')");
+
+			if ($insertForecast) {
+				header("Refresh:0");
+			}
+
+			// LANJUT
 
 		} else if (count($records) >= 3){
 
@@ -39,8 +77,8 @@ if (isset($_POST['prediksi'])){
 
 			$averageTiga = round(($t1 + $t2 + $t3) / 3);
 
-			$insertForecast = $db->query("INSERT INTO simple_moving (fore_3) VALUES ('$averageTiga')");
-			if ($insertForecast) {
+			$insertForecast3 = $db->query("INSERT INTO simple_moving (fore_3) VALUES ('$averageTiga')");
+			if ($insertForecast3) {
 				header("Refresh:0");
 			}
 
@@ -103,6 +141,7 @@ if(isset($_POST['input'])) {
 						$mse3 = $mad3 * $mad3;
 
 
+
 						$input = $db->query("UPDATE simple_moving
 																		SET perolehan = '$inputData',
 																				mad_3 = '$mad3',
@@ -136,7 +175,7 @@ if(isset($_POST['input'])) {
 	<script>
 		function showPrompt() {
 			var x;
-	        var site = prompt("", "Masukkan Data");
+	        var site = prompt("Masukkan Data", "");
         	if (site != null) {
             	x = site;
             	document.getElementById("demo").value = x;
