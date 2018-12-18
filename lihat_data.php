@@ -49,8 +49,11 @@ if (isset($_POST['prediksi'])){
 			$t3 = $a[2];
 
 
-			$averageEnam = round(($e1 + $e2 + $e3 + $e4 + $e5 + $e6) / 6);
-			$averageTiga = round(($t1 + $t2 + $t3) / 3);
+			$averageEnam = round((($e1 + $e2 + $e3 + $e4 + $e5 + $e6) / 6), 2);
+			$averageTiga = round( (($t1 + $t2 + $t3) / 3), 2);
+
+			echo $averageEnam;
+			echo $averageTiga;
 
 			$insertForecast = $db->query("INSERT INTO simple_moving (fore_3, fore_6) VALUES ('$averageTiga', '$averageEnam')");
 
@@ -75,7 +78,7 @@ if (isset($_POST['prediksi'])){
 			$t2 = $a[1];
 			$t3 = $a[2];
 
-			$averageTiga = round(($t1 + $t2 + $t3) / 3);
+			$averageTiga = round((($t1 + $t2 + $t3) / 3), 2);
 
 			$insertForecast3 = $db->query("INSERT INTO simple_moving (fore_3) VALUES ('$averageTiga')");
 			if ($insertForecast3) {
@@ -130,15 +133,42 @@ if(isset($_POST['input'])){
 
 
 if(isset($_POST['input'])) {
-	if (count($records) >= 3) {
-			echo "<script>
-							alert('Data Aktual Berhasil diupdate');
-						</script>";
+	if (count($records) > 6) {
 
 						$inputData = $_POST['inputData'];
 
-						$mad3 = abs((int) $inputData - (int) $lastVal3);
-						$mse3 = $mad3 * $mad3;
+						$mad3 = round( (abs( $inputData - $lastVal3)), 2);
+						$mse3 = round(($mad3 * $mad3), 2);
+
+						$mad6 = round( (abs( $inputData - $lastVal6)), 2);
+						$mse6 = round(($mad6 * $mad6), 2);
+
+
+
+						$input = $db->query("UPDATE simple_moving
+																		SET perolehan = '$inputData',
+																				mad_3 = '$mad3',
+																				mad_6 = '$mad6',
+																				mse_3 = '$mse3',
+																				mse_6 = '$mse6'
+																				WHERE perolehan = 0") ;
+
+						if ($input) {
+							echo "<script>
+											alert('Data Aktual Berhasil diupdate');
+										</script>";
+
+							header("Refresh:0");
+						}
+
+
+
+	} else if (count($records) >= 3) {
+
+						$inputData = $_POST['inputData'];
+
+						$mad3 = round((abs( $inputData - $lastVal3)), 2);
+						$mse3 = round(($mad3 * $mad3 ), 2);
 
 
 
@@ -149,6 +179,10 @@ if(isset($_POST['input'])) {
 																				WHERE perolehan = 0") ;
 
 						if ($input) {
+							echo "<script>
+											alert('Data Aktual Berhasil diupdate');
+										</script>";
+
 							header("Refresh:0");
 						}
 	}
@@ -203,12 +237,14 @@ if(isset($_POST['input'])) {
 							<tr class="table100-head">
 								<th class="column1">Bulan</th>
 								<th class="column2">Perolehan</th>
-								<th class="column3">F 3 Bulan</th>
-								<th class="column4">F 6 Bulan</th>
+								<th class="column3">Fore 3 Bln</th>
+								<th class="column4">Fore 6 Bln</th>
 								<th class="column5">MAD 3 Bln</th>
 								<th class="column6">MAD 6 Bln</th>
 								<th class="column7">MSE 3 Bln</th>
 								<th class="column8">MSE 6 Bln</th>
+								<th class="column9">MAPE 3 Bln</th>
+								<th class="column10">MAPE 6 Bln</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -224,6 +260,8 @@ if(isset($_POST['input'])) {
 									<td class="column6"><?php echo $r->mad_6; ?></td>
 									<td class="column7"><?php echo $r->mse_3; ?></td>
 									<td class="column8"><?php echo $r->mse_6; ?></td>
+									<td class="column7"><?php echo $r->mape_3; ?></td>
+									<td class="column8"><?php echo $r->mape_6; ?></td>
 								</tr>
 								<?php $i++ ?>
 							<?php } ?>

@@ -6,7 +6,7 @@
 
 @font-face {
   font-family: OpenSans-Regular;
-  src: url('../fonts/OpenSans/OpenSans-Regular.ttf'); 
+  src: url('../fonts/OpenSans/OpenSans-Regular.ttf');
 }
 
 
@@ -14,8 +14,8 @@
 /*//////////////////////////////////////////////////////////////////
 [ RESTYLE TAG ]*/
 * {
-	margin: 0px; 
-	padding: 0px; 
+	margin: 0px;
+	padding: 0px;
 	box-sizing: border-box;
 }
 
@@ -177,7 +177,7 @@ table td.r, table th.r {
 
 .table100-head th{
   font-family: OpenSans-Regular;
-  font-size: 18px;
+  font-size: 14px;
   color: #fff;
   line-height: 1.2;
   font-weight: unset;
@@ -202,42 +202,53 @@ tbody tr:hover {
 }
 
 .column1 {
-  width: 260px;
+  width: 140px;
   padding-left: 40px;
 }
 
 .column2 {
   width: 160px;
+  text-align: center;
 }
 
 .column3 {
   width: 170px;
-  text-align: right;
+  text-align: center;
 }
 
 .column4 {
   width: 170px;
-  text-align: right;
+  text-align: center;
 }
 
 .column5 {
   width: 170px;
-  text-align: right;
+  text-align: center;
 }
 
 .column6 {
   width: 170px;
-  text-align: right;
+  text-align: center;
 }
 
 .column7 {
   width: 170px;
-  text-align: right;
+  text-align: center;
 }
 
 .column8 {
   width: 170px;
-  text-align: right;
+  text-align: center;
+}
+
+.column9 {
+  width: 170px;
+  text-align: center;
+}
+
+.column10 {
+  width: 170px;
+  text-align: center;
   padding-right: 40px;
 }
 
