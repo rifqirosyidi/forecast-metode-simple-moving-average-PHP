@@ -52,9 +52,6 @@ if (isset($_POST['prediksi'])){
 			$averageEnam = round((($e1 + $e2 + $e3 + $e4 + $e5 + $e6) / 6), 2);
 			$averageTiga = round( (($t1 + $t2 + $t3) / 3), 2);
 
-			echo $averageEnam;
-			echo $averageTiga;
-
 			$insertForecast = $db->query("INSERT INTO simple_moving (fore_3, fore_6) VALUES ('$averageTiga', '$averageEnam')");
 
 			if ($insertForecast) {
@@ -143,6 +140,9 @@ if(isset($_POST['input'])) {
 						$mad6 = round( (abs( $inputData - $lastVal6)), 2);
 						$mse6 = round(($mad6 * $mad6), 2);
 
+						$mape3 = round((100 * ($mad3 / $inputData)), 2);
+						$mape6 = round((100 * ($mad6 / $inputData)), 2);
+
 
 
 						$input = $db->query("UPDATE simple_moving
@@ -150,7 +150,9 @@ if(isset($_POST['input'])) {
 																				mad_3 = '$mad3',
 																				mad_6 = '$mad6',
 																				mse_3 = '$mse3',
-																				mse_6 = '$mse6'
+																				mse_6 = '$mse6',
+																				mape_3 = '$mape3',
+																				mape_6 = '$mape6'
 																				WHERE perolehan = 0") ;
 
 						if ($input) {
@@ -169,13 +171,13 @@ if(isset($_POST['input'])) {
 
 						$mad3 = round((abs( $inputData - $lastVal3)), 2);
 						$mse3 = round(($mad3 * $mad3 ), 2);
-
-
+						$mape3 = round((100 * ($mad3 / $inputData)), 2);
 
 						$input = $db->query("UPDATE simple_moving
 																		SET perolehan = '$inputData',
 																				mad_3 = '$mad3',
-																				mse_3 = '$mse3'
+																				mse_3 = '$mse3',
+																				mape_3 = '$mape3'
 																				WHERE perolehan = 0") ;
 
 						if ($input) {

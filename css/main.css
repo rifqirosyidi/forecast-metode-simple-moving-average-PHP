@@ -190,13 +190,13 @@ tbody tr:nth-child(even) {
 tbody tr {
   font-family: OpenSans-Regular;
   font-size: 15px;
-  color: #808080;
+  color: #111111;
   line-height: 1.2;
   font-weight: unset;
 }
 
 tbody tr:hover {
-  color: #555555;
+  color: #000000;
   background-color: #f5f5f5;
   cursor: pointer;
 }
