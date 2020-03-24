@@ -119,7 +119,6 @@ $cekFore6 = $db->query("SELECT fore_6 from simple_moving ORDER BY id DESC LIMIT 
 		$lastVal3 = $l3;
 		$lastVal6 = $l6;
 
-echo $lastVal3;
 
 if(isset($_POST['input'])){
 	if($lastVal3 == 0) {
