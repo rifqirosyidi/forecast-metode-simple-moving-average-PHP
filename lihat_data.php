@@ -15,7 +15,6 @@ if ($result) {
 	}
 }
 
-
 if (isset($_POST['prediksi'])){
 
 		if(count($records) >= 6 ) {
@@ -120,11 +119,13 @@ $cekFore6 = $db->query("SELECT fore_6 from simple_moving ORDER BY id DESC LIMIT 
 		$lastVal3 = $l3;
 		$lastVal6 = $l6;
 
+echo $lastVal3;
+
 if(isset($_POST['input'])){
 	if($lastVal3 == 0) {
 		echo "<script>
-						alert('Harap Lihat Forecast Lebih Dulu Sebagai Acuan');
-					</script>";
+					alert('Harap Lihat Forecast Lebih Dulu Sebagai Acuan');
+				</script>";
 	}
 }
 
